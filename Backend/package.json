@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nexmicroservices/micromapper/issues"
   },
-  "homepage": "https://github.com/nexmicroservices/micromapper#readme"
+  "homepage": "https://github.com/nexmicroservices/micromapper#readme",
+  "dependencies": {
+    "jshint": "^2.11.0"
+  }
 }
