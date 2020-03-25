@@ -1,0 +1,19 @@
+{
+  "name": "micromapper-backend",
+  "version": "1.0.0",
+  "description": "This is the backend of the Nexworld MicroMapper project. Go Nexworld!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nexmicroservices/micromapper.git"
+  },
+  "author": "SCH, TBR, ATR, TLE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nexmicroservices/micromapper/issues"
+  },
+  "homepage": "https://github.com/nexmicroservices/micromapper#readme"
+}
