@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion } from "react-bootstrap";
 import { Card } from "react-bootstrap";
-import DomainGraph from './DomainGraph';
+import DomainGraph from "./domain-graph/DomainGraph";
 
 
 function Specifications() {
