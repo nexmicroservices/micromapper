@@ -2,6 +2,7 @@ import React from 'react';
 import { Accordion } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import DomainGraph from "./domain-graph/DomainGraph";
+import MicroServicesList from "./microservices-list/MicroServicesList";
 
 
 function Specifications() {
@@ -28,7 +29,7 @@ function Specifications() {
                     Microservices
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="2">
-                    <Card.Body>TODO</Card.Body>
+                    <Card.Body><MicroServicesList /></Card.Body>
                 </Accordion.Collapse>
             </Card>
         </Accordion>
