@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Accordion } from 'react-bootstrap';
+import { Accordion } from 'react-bootstrap';
 import MicroService from '../entities/MicroService';
 import MicroServiceCard from './MicroServiceCard';
 
@@ -15,7 +15,7 @@ export default function MicroServicesList(props: any) {
         <Accordion>
         {
             microServices.map((microService: MicroService, i) => {
-                return (<MicroServiceCard microService={microService} position={i} />);  
+                return (<MicroServiceCard microService={microService} position={i} key={i} />);  
             })
         }
         </Accordion>

@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { Container } from 'react-bootstrap';
+import React from 'react';
 import { Col } from 'react-bootstrap';
 import Domain from "../entities/Domain";
 import MicroService from "../entities/MicroService";
 import MicroServiceCard from './MicroServiceCard';
-import { render } from '@testing-library/react';
 
 
 
@@ -23,9 +21,18 @@ export default function DomainCard(props: any) {
         <Col style={ domainCardStyle(domain) }>
             {domain.name}
             { 
-                domain.microServices.map((microService: MicroService, i) => {
-                    return (<MicroServiceCard microService = {microService}  />);
-                })
+                (domain.subDomains ? 
+                    domain.subDomains.map((subDomain: Domain, i) => {
+                        return (<DomainCard domain = {subDomain} key={i}  />);
+                    })
+                :<></>)
+            }
+            { 
+                (domain.microServices ? 
+                    domain.microServices.map((microService: MicroService, i) => {
+                        return (<MicroServiceCard microService = {microService}  />);
+                    })
+                :<></>)
             }
         </Col>
     );

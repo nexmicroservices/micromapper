@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default class MicroService {
     constructor(name: string, description: string, versions: string[]) {

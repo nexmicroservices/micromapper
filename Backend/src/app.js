@@ -3,6 +3,7 @@ import 'express-async-errors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
+import response from './helpers/response';
 import routes from './routes';
 import mongoose from 'mongoose';
 import domainRoutes from './domain/domain-routes';
@@ -17,6 +18,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
+app.use(response.setHeadersForCORS);
 app.use('/domains', domainRoutes);
 //app.use('/', routes);
 app.use(clientErrorHandler); //should be called AFTER all REST API routes
