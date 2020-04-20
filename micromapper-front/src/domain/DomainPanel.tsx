@@ -19,13 +19,28 @@ export default function(props: any) {
         }
 
         const domain:Domain = {
+            _id: (props.domain?props.domain._id:undefined),
             name : form.name.value,
             color : form.color.value,
             microServices : [],
-            subDomains: []
+            subDomains: [],
+            parentDomain: (props.parentDomain?props.parentDomain._id:
+                (props.domain && props.domain.parentDomain?props.domain.parentDomain._id:undefined))
         }
 
-        axios.post('http://localhost:8080/domains', domain)
+        if (props.domain && props.domain._id) {
+            axios.put('http://localhost:8080/domains/'+props.domain._id, domain)
+            .then(() => {
+                console.log('domain mis à jour !')
+                props.refresh();
+                props.onClose();
+            })
+            .catch((error) => {
+                setDisplayAlert(true);
+                console.log(error);
+            });
+        } else {
+            axios.post('http://localhost:8080/domains', domain)
             .then(() => {
                 console.log('domain créé !')
                 props.refresh();
@@ -35,6 +50,7 @@ export default function(props: any) {
                 setDisplayAlert(true);
                 console.log(error);
             });
+        }
 
         //setValidated(true);
     }
@@ -42,17 +58,26 @@ export default function(props: any) {
     return (
         <Form onSubmit={handleSubmit}>
             <Alert variant="danger" show={displayAlert}>A domain with this name already exists</Alert>
+            <FormGroup as={Row} controlId="parentDomainName">
+                <FormLabel column sm="2">Parent</FormLabel>
+                <Col sm="5">
+                    { props.parentDomain? props.parentDomain.name:'' }
+                </Col>
+                <Col sm="5">
+                    { props.parentDomain? props.parentDomain.color:'' }
+                </Col>
+            </FormGroup>
             <FormGroup as={Row} controlId="name">
                 <FormLabel column sm="2">Name</FormLabel>
                 <Col sm="10">
-                    <FormControl required placeholder="Type name of the domain"></FormControl>
+                    <FormControl required placeholder="Type name of the domain" defaultValue={props.domain?props.domain.name:''} />
                     <FormText className="text-muted">Name of the domain</FormText>
                 </Col>
             </FormGroup>
             <FormGroup as={Row} controlId="color">
                 <FormLabel column sm="2">Color</FormLabel>
                 <Col sm="10">
-                    <FormControl required type="Color" placeholder="Color of the domain"></FormControl>
+                    <FormControl required type="Color" placeholder="Color of the domain" defaultValue={props.domain?props.domain.color:''} />
                     <FormText className="text-muted">Color used to display the domain</FormText>
                 </Col>
             </FormGroup>

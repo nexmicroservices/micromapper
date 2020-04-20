@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Button } from 'react-bootstrap';
 import Domain from "../entities/Domain";
 import MicroService from "../entities/MicroService";
 import MicroServiceCard from './MicroServiceCard';
@@ -23,7 +23,15 @@ export default function DomainCard(props: any) {
             { 
                 (domain.subDomains ? 
                     domain.subDomains.map((subDomain: Domain, i) => {
-                        return (<DomainCard domain = {subDomain} key={i}  />);
+                        return (
+                            <DomainCard 
+                                key={i} 
+                                domain = {subDomain}
+                                onClose={ () => {props.onHide()}} 
+                                refresh={() => {props.refresh()}} 
+                                parentDomain={domain}
+                                showModal={() => {props.showModal()}} />);
+    
                     })
                 :<></>)
             }
@@ -34,6 +42,10 @@ export default function DomainCard(props: any) {
                     })
                 :<></>)
             }
+            <Button variant="link" size="sm" style={{whiteSpace:'nowrap'}} className="float-right"
+                onClick = { () => props.showModal(null, domain)}  >Edit domain</Button>
+            <Button variant="link" size="sm" style={{whiteSpace:'nowrap'}} className="float-right"
+                onClick = { () => props.showModal(domain, null)}  >+ domain</Button>
         </Col>
     );
 }

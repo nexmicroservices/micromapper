@@ -1,36 +1,36 @@
 import express from 'express';
 import Domain from './domain';
 import services from './domain-services';
-import mongoose from 'mongoose';
 
 const routes  = express.Router();
 
 routes.post('/', async (req, res) => {
     const name = req.body.name;
     const color = req.body.color;
-    const parentStr = req.body.parent;
+    const parent = req.body.parentDomain;
  
     if (!name || !color) { 
         throw new Error('Missing parameters');
     }
+
+    const domain = await services.create(name, color, parent);
+    
+    res.json(domain)
+    return
  
-    let parent;
-    if (parentStr) {
-        const parentObject = await services.findById(parentStr);
-        console.log(parentObject);
-        if (!parentObject) {
-            throw Error('Object not found');
-        }
-        parent = mongoose.Types.ObjectId(parentStr);
+})
+
+routes.put('/:id', async (req, res) => {
+    const _id = req.params.id
+    const name = req.body.name;
+    const color = req.body.color;
+ 
+    if (!_id, !name || !color) { 
+        throw new Error('Missing parameters');
     }
 
-    const domain = new Domain({ 
-        name: name,
-        color: color,
-        parent: parent
-    })
-     
-    await domain.save()
+    const domain = await services.update(_id, name, color);
+    
     res.json(domain)
     return
  
