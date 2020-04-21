@@ -30,7 +30,7 @@ export default function DomainCard(props: any) {
                                 onClose={ () => {props.onHide()}} 
                                 refresh={() => {props.refresh()}} 
                                 parentDomain={domain}
-                                showModal={() => {props.showModal()}} />);
+                                showModal={() => {props.showModal(domain, subDomain)}} />);
     
                     })
                 :<></>)

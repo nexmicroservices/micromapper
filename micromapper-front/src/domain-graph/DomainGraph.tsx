@@ -16,6 +16,9 @@ export default function DomainGraph(props: any) {
             {
                 props.domains.map((domain: Domain, i:number) => 
                     <DomainCard domain={domain} key={i} showModal={ (parentDomain: Domain, modalDomain: Domain) => {
+                        console.log('showmodal');
+                        console.log(modalDomain);
+                        console.log(parentDomain);
                         setParentDomain(parentDomain); 
                         setModalDomain(modalDomain); 
                         setModalShow(true)}} />
