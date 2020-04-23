@@ -48,8 +48,14 @@ routes.get('/:id', async (req, res) => {
     const domain = await services.findById(id);
     console.log("my domain : " + domain);
     res.json(domain)
+    return 
+})
+
+
+routes.delete('/:id', async (req, res) => {
+    const id = req.params.id
+    const domain = await services.deleteById(id);
     return
- 
 })
 
 module.exports = routes;

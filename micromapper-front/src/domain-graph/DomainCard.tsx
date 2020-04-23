@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Domain from "../entities/Domain";
 import MicroService from "../entities/MicroService";
 import MicroServiceCard from './MicroServiceCard';
+import DomainServices from '../domain/DomainServices';
 
 
 
@@ -19,14 +20,17 @@ export default function DomainCard(props: any) {
     const [showMicroServices, setShowMicroServices] = useState(false);
 
     let domain:Domain = props.domain;
+    let domainServices = new DomainServices();
 
     return (
         <Col style = {{flex:1}} >
             <Card body style={ domainCardStyle(domain) }>
                 <Card.Title style={{ whiteSpace: 'nowrap'}}>
                     {domain.name} 
-                    <Button variant="link" size="sm" style={{whiteSpace:'nowrap'}} className="float-right"
+                    <Button variant="link" size="sm" className="float-right"
                         onClick = { () => props.showModal(null, domain)}  ><FontAwesomeIcon icon="edit" /></Button>
+                    <Button variant="link" size="sm" className="float-right"
+                        onClick = { () => domainServices.deleteDomain(domain._id!, props.refresh) }  ><FontAwesomeIcon icon="trash-alt" /></Button>
                 </Card.Title>
 
 

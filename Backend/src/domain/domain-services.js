@@ -40,6 +40,14 @@ async function update(_id, name, color) {
 exports.update = update;
 
 
+async function deleteById(id) {
+    console.log("id:" + id);
+    Domain.deleteOne({_id : id}, function (err) {
+        if (err) return handleError(err);
+    });
+}
+exports.deleteById = deleteById;
+
 
 async function findById(id) {
     console.log("id:" + id);
