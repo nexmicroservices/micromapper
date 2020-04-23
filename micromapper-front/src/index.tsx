@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
+import './fontawesome';
 
 /*
 axios.interceptors.request.use(function (config) {

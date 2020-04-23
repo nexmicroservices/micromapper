@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './DomainGraph.css';
-import { CardGroup, Button } from 'react-bootstrap';
+import { CardDeck, CardGroup, Button } from 'react-bootstrap';
 import DomainCard from './DomainCard';
 import Domain from '../entities/Domain';
 import DomainModal from '../domain/DomainModal';
@@ -12,7 +12,7 @@ export default function DomainGraph(props: any) {
 
     return (
         <div>
-            <CardGroup>
+            <CardGroup style={{display: 'flex', flexDirection: 'row', flexGrow: 4, flexWrap: 'wrap'}}>
             {
                 props.domains.map((domain: Domain, i:number) => 
                     <DomainCard domain={domain} key={i} showModal={ (parentDomain: Domain, modalDomain: Domain) => {
@@ -25,6 +25,7 @@ export default function DomainGraph(props: any) {
                 )
             }
             </CardGroup>
+
             <DomainModal 
                 showDomainPanel={modalShow} 
                 onHide={ () => { setModalShow(false) } } 
