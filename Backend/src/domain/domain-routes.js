@@ -1,5 +1,4 @@
 import express from 'express';
-import Domain from './domain';
 import services from './domain-services';
 
 const routes  = express.Router();

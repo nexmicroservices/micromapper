@@ -51,8 +51,13 @@ exports.deleteById = deleteById;
 
 async function findById(id) {
     console.log("id:" + id);
-    const domain = Domain.findOne({_id : id})
-    return domain
+    const domains =  await Domain.aggregate()
+        .match({ _id: mongoose.Types.ObjectId(id) })
+        .graphLookup({ from: 'domains', as: 'subDomains', startWith: '$_id', connectFromField: '_id', connectToField: 'parent' })
+        .graphLookup({ from: 'microservices', as: 'microServices', startWith: '$_id', connectFromField: '_id', connectToField: 'domain' });
+
+
+    return domains[0];
 }
 exports.findById = findById;
 
@@ -60,7 +65,8 @@ exports.findById = findById;
 async function findAll(id) {
     const domainsTree =  await Domain.aggregate()
         .match({ parent: null })
-        .graphLookup({ from: 'domains', as: 'subDomains', startWith: '$_id', connectFromField: '_id', connectToField: 'parent' });
+        .graphLookup({ from: 'domains', as: 'subDomains', startWith: '$_id', connectFromField: '_id', connectToField: 'parent' })
+        .graphLookup({ from: 'microservices', as: 'microServices', startWith: '$_id', connectFromField: '_id', connectToField: 'domain' });
     return domainsTree;
 }
 exports.findAll = findAll;
