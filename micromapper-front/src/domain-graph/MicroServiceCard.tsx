@@ -23,7 +23,7 @@ export default function MicroServiceCard(props: any) {
                             }}>
                                 <Form.Control as="select" style={{width:80}}>
                                     {
-                                        microService.versions.map((version, i) => {
+                                        microService.versions?.map((version, i) => {
                                             return <option>{version}</option>
                                         })
                                     }

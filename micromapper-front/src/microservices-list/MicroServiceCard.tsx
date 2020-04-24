@@ -26,7 +26,7 @@ export default function MicroServiceCard(props: any) {
                         <Col md='2' style={{ textAlign:'right'}}>
                             <Form.Control as="select" style={{width:80}}>
                                 {
-                                    microService.versions.map((version, i) => {
+                                    microService.versions?.map((version, i) => {
                                         return <option key={i}>{version}</option>
                                     })
                                 }
