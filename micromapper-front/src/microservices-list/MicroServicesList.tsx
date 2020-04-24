@@ -8,8 +8,8 @@ export default function MicroServicesList(props: any) {
     //microServices = props.microServices;
 
     let microServices : MicroService[] = [];
-    microServices[0] = new MicroService('Customers', 'CRUD des clients', ['1.0', '1.1', '1.2']);
-    microServices[1] = new MicroService('Products', 'CRUD des produits', ['1.0', '1.1', '2.0']);
+    //microServices[0] = new MicroService('Customers', 'CRUD des clients', ['1.0', '1.1', '1.2']);
+    //microServices[1] = new MicroService('Products', 'CRUD des produits', ['1.0', '1.1', '2.0']);
 
     return (
         <Accordion>

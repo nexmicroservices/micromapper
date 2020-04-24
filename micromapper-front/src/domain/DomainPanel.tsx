@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import { Form, FormGroup, FormLabel, FormControl, FormText, Col, Row, Button, Alert } from 'react-bootstrap'
 import Domain from '../entities/Domain'
-import axios from 'axios'
+import DomainServices from './DomainServices'
 
 
 export default function(props: any) {
     const [displayAlert, setDisplayAlert] = useState(false);
+
+    const domainServices = new DomainServices();
 
     const handleSubmit = (event: any) => {
         const form = event.currentTarget;
@@ -29,24 +31,12 @@ export default function(props: any) {
         }
 
         if (props.domain && props.domain._id) {
-            axios.put('http://localhost:8080/domains/'+props.domain._id, domain)
-            .then(() => {
-                console.log('domain mis à jour !')
-                props.refresh();
-                props.onClose();
-            })
-            .catch((error) => {
+            domainServices.updateDomain(domain, () => {props.refresh(); props.onClose();}).catch((error) => {
                 setDisplayAlert(true);
                 console.log(error);
             });
         } else {
-            axios.post('http://localhost:8080/domains', domain)
-            .then(() => {
-                console.log('domain créé !')
-                props.refresh();
-                props.onClose();
-            })
-            .catch((error) => {
+            domainServices.createDomain(domain, () => {props.refresh(); props.onClose();}).catch((error) => {
                 setDisplayAlert(true);
                 console.log(error);
             });

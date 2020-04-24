@@ -54,44 +54,31 @@ export default function DomainCard(props: any) {
                                     onClose={ () => {props.onHide()}} 
                                     refresh={() => {props.refresh()}} 
                                     parentDomain={domain}
-                                    showModal={() => {props.showModal(domain, subDomain)}} />);        
+                                    showModal={() => {props.showModal(domain, subDomain)}}
+                                    showModalMicroService={() => {props.showModalMicroService(domain, undefined)}} />);
                         })
                     : <></>
                 }
 
 
-                { 
-                    (domain.microServices ? 
-                        domain.microServices.map((microService: MicroService, i) => {
-                            return (<MicroServiceCard microService = {microService}  />);
-                        })
-                    :<></>)
+
+                <div style={{ whiteSpace: 'nowrap'}}>
+                    {domain.microServices && domain.microServices.length>0?domain.microServices.length:'No'} microservices
+                    {(domain.microServices && domain.microServices.length>0?
+                    <Button variant="link" size="sm" onClick={ () => setShowMicroServices(!showMicroServices) }>{showMicroServices?<FontAwesomeIcon icon="eye-slash" />:<FontAwesomeIcon icon="eye" />}</Button>
+                    :<></>)}
+                    <Button variant="link" size="sm"
+                        onClick = { () => props.showModalMicroService(domain, undefined)}  ><FontAwesomeIcon icon="plus" /></Button>
+                </div>
+
+                {
+                    showMicroServices && domain.microServices ? 
+                    domain.microServices.map((microService: MicroService, i) => {
+                        return (<MicroServiceCard microService = {microService}  />);
+                    })
+                : <></>
                 }
             </Card>
         </Col>
     );
 }
-
-/*
-export default class DomainCard extends Component {
-    constructor(props: any, public domain: Domain) {
-        super(props);
-        this.domain = domain;
-    }
-
-    //{ 
-        //this.domain.microServices.forEach(microService => {
-        //<MicroServiceCard microService = microService />
-        //}
-    //)}
-
-    render() {
-        return (
-            <Col style={ domainCardStyle(this.domain) }>
-                {this.domain.name}
-                <div />
-            </Col>
-        );
-    }
-}
-*/
