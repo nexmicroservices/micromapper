@@ -5,6 +5,7 @@ export default interface Domain {
     _id?: string;
     name: string;
     color: string;
+    namespace: string;
     microServices?: MicroService[];
     subDomains?: Domain[];
     parentDomain?: Domain;

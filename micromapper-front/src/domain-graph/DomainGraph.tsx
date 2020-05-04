@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './DomainGraph.css';
-import { CardDeck, CardGroup, Button } from 'react-bootstrap';
+import { CardGroup, Button } from 'react-bootstrap';
 import DomainCard from './DomainCard';
 import Domain from '../entities/Domain';
 import MicroService from '../entities/MicroService';
@@ -57,7 +57,7 @@ export default function DomainGraph(props: any) {
                 onHide={ () => { setModalMicroServiceShow(false) } } 
                 refresh={ () => {props.refresh()} }
                 domain={ modalMicroServiceDomain }
-                microService={ /*modalMicroService*/null } />
+                microService={ modalMicroService } />
 
         </div>
     );

@@ -5,6 +5,7 @@ const routes  = express.Router();
 
 routes.post('/', async (req, res) => {
     const name = req.body.name;
+    const namespace = req.body.namespace;
     const color = req.body.color;
     const parent = req.body.parentDomain;
  
@@ -12,7 +13,7 @@ routes.post('/', async (req, res) => {
         throw new Error('Missing parameters');
     }
 
-    const domain = await services.create(name, color, parent);
+    const domain = await services.create(name, namespace, color, parent);
     
     res.json(domain)
     return
@@ -21,6 +22,7 @@ routes.post('/', async (req, res) => {
 
 routes.put('/:id', async (req, res) => {
     const _id = req.params.id
+    const namespace = req.body.namespace;
     const name = req.body.name;
     const color = req.body.color;
  
@@ -28,7 +30,7 @@ routes.put('/:id', async (req, res) => {
         throw new Error('Missing parameters');
     }
 
-    const domain = await services.update(_id, name, color);
+    const domain = await services.update(_id, name, namespace, color);
     
     res.json(domain)
     return
@@ -44,7 +46,7 @@ routes.get('/', async (req, res) => {
 
 routes.get('/:id', async (req, res) => {
     const id = req.params.id
-    const domain = await services.findById(id);
+    const domain = await services.findGraphById(id);
     console.log("my domain : " + domain);
     res.json(domain)
     return 

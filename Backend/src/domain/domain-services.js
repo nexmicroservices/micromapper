@@ -1,11 +1,12 @@
 import Domain from './domain';
 import mongoose from 'mongoose';
+import kubernetesService from '../kubernetes/kubernetes-services';
 
 
-async function create(name, color, parentStr) {
+async function create(name, namespace, color, parentStr) {
     let parent;
     if (parentStr) {
-        const parentObject = await findById(parentStr);
+        const parentObject = await findObjectById(parentStr);
         console.log(parentObject);
         if (!parentObject) {
             throw Error('Object not found');
@@ -16,23 +17,25 @@ async function create(name, color, parentStr) {
     const domain = new Domain({ 
         name: name,
         color: color,
+        namespace: namespace,
         parent: parent
     })
      
-    return domain.save()
+    domain.save();
 }
 exports.create = create;
 
 
 
-async function update(_id, name, color) {
-    const domain = await findById(_id);
+async function update(_id, name, namespace, color) {
+    const domain = await findObjectById(_id);
     console.log(domain);
     if (!domain) {
         throw Error('Object not found');
     }
 
     domain.name = name;
+    domain.namespace = namespace;
     domain.color = color;
      
     return domain.save()
@@ -49,7 +52,16 @@ async function deleteById(id) {
 exports.deleteById = deleteById;
 
 
-async function findById(id) {
+async function findObjectById(id) {
+    console.log("id:" + id);
+    const domain =  await Domain.findById(id);
+
+    return domain;
+}
+exports.findObjectById = findObjectById;
+
+
+async function findGraphById(id) {
     console.log("id:" + id);
     const domains =  await Domain.aggregate()
         .match({ _id: mongoose.Types.ObjectId(id) })
@@ -59,7 +71,7 @@ async function findById(id) {
 
     return domains[0];
 }
-exports.findById = findById;
+exports.findGraphById = findGraphById;
 
 
 async function findAll(id) {
@@ -67,6 +79,7 @@ async function findAll(id) {
         .match({ parent: null })
         .graphLookup({ from: 'domains', as: 'subDomains', startWith: '$_id', connectFromField: '_id', connectToField: 'parent' })
         .graphLookup({ from: 'microservices', as: 'microServices', startWith: '$_id', connectFromField: '_id', connectToField: 'domain' });
+    
     return domainsTree;
 }
 exports.findAll = findAll;

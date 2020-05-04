@@ -24,6 +24,7 @@ export default function(props: any) {
             _id: (props.domain?props.domain._id:undefined),
             name : form.name.value,
             color : form.color.value,
+            namespace: form.namespace.value,
             microServices : [],
             subDomains: [],
             parentDomain: (props.parentDomain?props.parentDomain._id:
@@ -62,6 +63,13 @@ export default function(props: any) {
                 <Col sm="10">
                     <FormControl required placeholder="Type name of the domain" defaultValue={props.domain?props.domain.name:''} />
                     <FormText className="text-muted">Name of the domain</FormText>
+                </Col>
+            </FormGroup>
+            <FormGroup as={Row} controlId="namespace">
+                <FormLabel column sm="2">Namespace</FormLabel>
+                <Col sm="10">
+                    <FormControl required placeholder="Type (main) namespace associated to the domain" defaultValue={props.domain?props.domain.namespace:''} />
+                    <FormText className="text-muted">Namespace associated to the domain</FormText>
                 </Col>
             </FormGroup>
             <FormGroup as={Row} controlId="color">

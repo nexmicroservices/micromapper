@@ -12,7 +12,7 @@ import microserviceRoutes from './microservice/microservice-routes';
 
  
 mongoose.connect('mongodb://localhost:27017/micromapper', {useNewUrlParser: true, useUnifiedTopology: true });
-
+mongoose.set('debug', true);
 
 const app = express();
 
