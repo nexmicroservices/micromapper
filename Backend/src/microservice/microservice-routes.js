@@ -1,5 +1,6 @@
 import express from 'express';
 import services from './microservice-services';
+import kubernetes from '../kubernetes/kubernetes-services';
 
 const routes  = express.Router();
 
@@ -40,6 +41,14 @@ routes.get('/:id', async (req, res) => {
     res.json(microservice)
     return 
 })
+
+routes.get('/:id/status', async (req, res) => {
+    const id = req.params.id
+    const pods = await kubernetes.getPods();
+    res.json(pods)
+    return 
+})
+
 
 
 routes.delete('/:id', async (req, res) => {
