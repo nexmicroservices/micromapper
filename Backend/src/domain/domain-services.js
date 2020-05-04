@@ -68,8 +68,14 @@ async function findGraphById(id) {
         .graphLookup({ from: 'domains', as: 'subDomains', startWith: '$_id', connectFromField: '_id', connectToField: 'parent' })
         .graphLookup({ from: 'microservices', as: 'microServices', startWith: '$_id', connectFromField: '_id', connectToField: 'domain' });
 
+    const domain = domains[0];
+    
+    if (domain.namespace) {
+        const deployments = await kubernetesService.getDeployments(domain.namespace);
+        domain.deployments = deployments;
+    }
 
-    return domains[0];
+    return domain;
 }
 exports.findGraphById = findGraphById;
 
