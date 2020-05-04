@@ -3,10 +3,10 @@ import domainServices from '../domain/domain-services';
 import mongoose from 'mongoose';
 
 
-async function create(name, domainStr) {
+async function create(name, deployment, domainStr) {
     let domain;
     if (domainStr) {
-        const domainObject = await domainServices.findById(domainStr);
+        const domainObject = await domainServices.findObjectById(domainStr);
         console.log(domainObject);
         if (!domainObject) {
             throw Error('Domain not found');
@@ -16,6 +16,7 @@ async function create(name, domainStr) {
 
     const microservice = new Microservice({ 
         name: name,
+        deployment: deployment,
         domain: domain
     })
      
@@ -33,6 +34,7 @@ async function update(_id, name) {
     }
 
     microservice.name = name;
+    microservice.deployment = deployment;
      
     return microservice.save()
 }

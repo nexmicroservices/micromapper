@@ -6,13 +6,14 @@ const routes  = express.Router();
 
 routes.post('/', async (req, res) => {
     const name = req.body.name;
+    const deployment = req.body.deployment;
     const domain = req.body.domain;
  
     if (!name || !domain) { 
         throw new Error('Missing parameters');
     }
 
-    const microservice = await services.create(name, domain);
+    const microservice = await services.create(name, deployment, domain);
     
     res.json(microservice)
     return
@@ -34,12 +35,13 @@ routes.get('/status', async (req, res) => {
 routes.put('/:id', async (req, res) => {
     const _id = req.params.id
     const name = req.body.name;
+    const deployment = req.body.deployment;
  
     if (!_id, !name) { 
         throw new Error('Missing parameters');
     }
 
-    const microservice = await services.update(_id, name);
+    const microservice = await services.update(_id, name, deployment);
     
     res.json(microservice)
     return

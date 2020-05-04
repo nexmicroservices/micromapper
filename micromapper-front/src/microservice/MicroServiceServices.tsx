@@ -6,6 +6,7 @@ export default class {
     public async createMicroService(microService: MicroService, refresh: Function) {
         axios.post('http://localhost:8080/microServices', {
             name: microService.name,
+            deployment: microService.deployment,
             domain: microService.domain._id
         })
             .then(() => {

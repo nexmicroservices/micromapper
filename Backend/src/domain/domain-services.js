@@ -72,12 +72,26 @@ async function findGraphById(id) {
     
     if (domain.namespace) {
         const deployments = await kubernetesService.getDeployments(domain.namespace);
-        domain.deployments = deployments;
+        //domain.deployments = deployments;
+
+        associateMicroServicesAndDeployements(domain, deployments);
+        //domain.deployments = deployments;
     }
 
     return domain;
 }
 exports.findGraphById = findGraphById;
+
+
+function associateMicroServicesAndDeployements(domain, deployments) {
+    const deploymentsMap = new Map(deployments.map(obj => [obj.name, obj]));
+    
+    domain.microServices.map((microService) => {
+        if (microService.deployment) {
+            microService.deploymentStatus = deploymentsMap.get(microService.deployment);
+        }
+    });
+}
 
 
 async function findAll(id) {

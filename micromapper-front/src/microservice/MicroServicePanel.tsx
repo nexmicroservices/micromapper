@@ -23,6 +23,7 @@ export default function(props: any) {
         const microService:MicroService = {
             _id: (props.microService?props.microService._id:undefined),
             name: form.name.value,
+            deployment: form.deployment.value,
             domain: props.domain
         }
 
@@ -58,6 +59,13 @@ export default function(props: any) {
                 <Col sm="10">
                     <FormControl required placeholder="Type name of the microservice" defaultValue={props.microService?props.microService.name:''} />
                     <FormText className="text-muted">Name of the microservice</FormText>
+                </Col>
+            </FormGroup>
+            <FormGroup as={Row} controlId="deployment">
+                <FormLabel column sm="2">Deployment</FormLabel>
+                <Col sm="10">
+                    <FormControl required placeholder="Kubernetes deployment name" defaultValue={props.microService?props.microService.deployment:''} />
+                    <FormText className="text-muted">Kubernetes deployement name</FormText>
                 </Col>
             </FormGroup>
             <Row>
