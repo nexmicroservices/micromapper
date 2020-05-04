@@ -19,6 +19,18 @@ routes.post('/', async (req, res) => {
  
 })
 
+
+routes.get('/status', async (req, res) => {
+    const namespace = req.query.namespace ? req.query.namespace: 'default';
+    const pods = await kubernetes.getDeployments(namespace);
+    console.log("pods:");
+    console.log(pods);
+    res.json(pods)
+    return 
+})
+
+
+
 routes.put('/:id', async (req, res) => {
     const _id = req.params.id
     const name = req.body.name;
@@ -41,14 +53,6 @@ routes.get('/:id', async (req, res) => {
     res.json(microservice)
     return 
 })
-
-routes.get('/:id/status', async (req, res) => {
-    const id = req.params.id
-    const pods = await kubernetes.getPods();
-    res.json(pods)
-    return 
-})
-
 
 
 routes.delete('/:id', async (req, res) => {

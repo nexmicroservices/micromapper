@@ -66,12 +66,20 @@ async function getPods() {
 
 exports.getPods = getPods;
 
-/*
-async function getDeployments() {
-    getAppsApi().listNamespacedDeployment('default').then((res) => {
-        console.log(res.body.items);
-        return res.body.items;
+
+async function getDeployments(namespace) {
+    await init();
+    return appsApi.listNamespacedDeployment(namespace).then((res) => {
+        const ret = res.body.items.map((item) => {
+            return {
+                'name': item.metadata.name, 
+                'namespace': item.metadata.namespace,
+                'availablePods': item.status.availableReplicas?availableReplicas:0,
+                'expectedPods': item.status.replicas 
+            };
+        });
+        return ret;
     });
 } 
 
-exports.getDeployments = getDeployments;*/
+exports.getDeployments = getDeployments;
